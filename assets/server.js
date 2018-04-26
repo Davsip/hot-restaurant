@@ -13,54 +13,9 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let reservations = [
-    {
-        name: `Jason`,
-        phoneNumber: 1234567890,
-        email: `jason@tester.com`,
-        uniqueID: 1321
-    },
-    {
-        name: `David`,
-        phoneNumber: 0987654321,
-        email: `David@tester.com`,
-        uniqueID: 1452
-    },
-    {
-        name: `Mike`,
-        phoneNumber: 1029384756,
-        email: `Mike@gtester.com`,
-        uniqueID: 1823
-    },
-    {
-        name: `testName2`,
-        phoneNumber: 1234567890,
-        email: `test@gmail.com`,
-        uniqueID: 1321
-    },
-    {
-        name: `testName3`,
-        phoneNumber: 1234567890,
-        email: `test@gmail.com`,
-        uniqueID: 1321
-    }
+let reservations = [];
 
-];
-
-let waitList = [
-    {
-        name: `testWait`,
-        phoneNumber: 1234567890,
-        email: `test@gmail.com`,
-        uniqueID: 1321
-    },
-    {
-        name: `testWait2`,
-        phoneNumber: 1234567890,
-        email: `test@gmail.com`,
-        uniqueID: 1321
-    }
-];
+let waitList = [];
 
 // Routes 
 app.get("/", function (req, res) {
@@ -85,12 +40,29 @@ app.get("/api/waitlist", function(req, res) {
     return res.json(waitList);
 });
 
-// Displays cleared table reservation list
+// Clears table reservation list
 app.post("/api/clear", function(req, res) {
     reservations = [];
     waitList = [];
 });
+
+// Create New Reservation - takes in JSON input
+app.post("/api/tables", function(req, res) {
+    // req.body hosts is equal to the JSON post sent from the user
+    // This works because of our body-parser middleware
+    var newReservation = req.body;
+    
+    console.log(newReservation);
+
+    if (reservations.length < 5) {
+        reservations.push(newReservation);
+        res.json(true);
+    } else {
+        waitList.push(newReservation);
+        res.json(false);
+    }
   
+});
 
 
 
