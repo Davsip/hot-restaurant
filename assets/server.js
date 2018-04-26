@@ -64,15 +64,15 @@ let waitList = [
 
 // Routes 
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "home.html"));
+    res.sendFile(path.join(__dirname, "../home.html"));
 });
 
 app.get("/tables", function (req, res) {
-    res.sendFile(path.join(__dirname, "tables.html"));
+    res.sendFile(path.join(__dirname, "../tables.html"));
 });
 
 app.get("/reserve", function (req, res) {
-    res.sendFile(path.join(__dirname, "reserve.html"));
+    res.sendFile(path.join(__dirname, "../reserve.html"));
 });
 
 // Displays table reservations
@@ -83,6 +83,12 @@ app.get("/api/tables", function(req, res) {
 // Displays waitlist
 app.get("/api/waitlist", function(req, res) {
     return res.json(waitList);
+});
+
+// Displays cleared table reservation list
+app.post("/api/clear", function(req, res) {
+    reservations = [];
+    waitList = [];
 });
   
 
